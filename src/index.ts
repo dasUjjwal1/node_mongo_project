@@ -7,6 +7,7 @@ import express, {
 } from "express";
 import { connect } from "mongoose";
 import companyRouter from "./routes/companyRoute";
+import userRouter from "./routes/userRoute";
 async function main() {
   try {
     const dbUrl = process.env.MONGODB_DATABASE_URL;
@@ -25,12 +26,14 @@ async function main() {
         next: NextFunction
       ) => {
         if (err instanceof SyntaxError && "body" in err) {
-          return res.status(400).json({ error: err.message });
+          res.status(400).json({ error: err.message });
+          return;
         }
         next();
       }
     );
     app.use("/company", companyRouter);
+    app.use("/user", userRouter);
     app.get("/health", async function (_request: Request, response: Response) {
       response.status(200).json({ message: "OK" });
     });

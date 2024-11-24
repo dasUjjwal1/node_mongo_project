@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { Collections } from "src/constant/constant";
 
-const CompanySchema = new Schema({
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -10,6 +10,11 @@ const CompanySchema = new Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  companyId: {
+    type: Schema.Types.ObjectId,
+    ref: Collections.Company,
+    index: true,
   },
   contactNumber: {
     type: Number,
@@ -28,5 +33,5 @@ const CompanySchema = new Schema({
   },
 });
 
-const CompanyModel = model(Collections.Company, CompanySchema);
-export default CompanyModel;
+const UserModel = model(Collections.User, UserSchema);
+export default UserModel;
